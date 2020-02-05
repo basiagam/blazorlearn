@@ -1,4 +1,5 @@
-﻿using BethanysPieShopHRM.Shared;
+﻿using BethanysPieShopBlazor.Server.Services;
+using BethanysPieShopHRM.Shared;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,11 @@ namespace BethanysPieShopBlazor.Server.Pages
 {
     public class EmployeeOverviewBase: ComponentBase
     {
-        protected override Task OnInitializedAsync()
+        [Inject]
+        public IEmployeeDataService EmployeeDataService { get; set; }
+        protected override async Task OnInitializedAsync()
         {
-
-            InitializeCountries();
-            InitializeJobCategories();
-            InitializeEmployees();
-
-            return base.OnInitializedAsync();
+            Employees = (await EmployeeDataService.GetAllEmployees()).ToList();
         }
 
         public IEnumerable<Employee> Employees { get; set; }
