@@ -7,14 +7,21 @@ using System.Threading.Tasks;
 
 namespace BethanysPieShopBlazor.Server.Pages
 {
-    public class EmployeeOverviewBase: ComponentBase
+    public class EmployeeDetailBase :ComponentBase
     {
+        [Parameter]
+        public string EmployeeId { get; set; }
+        public Employee Employee { get; set; } = new Employee();
+
         protected override Task OnInitializedAsync()
         {
 
             InitializeCountries();
             InitializeJobCategories();
             InitializeEmployees();
+
+            Employee = Employees.FirstOrDefault(e => e.EmployeeId == int.Parse(EmployeeId));
+
 
             return base.OnInitializedAsync();
         }
